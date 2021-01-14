@@ -19,19 +19,39 @@ RIGHT = (1, 0)
 class snake(object):
 
     def __init__(self):
-        pass
+
+        self.length = 1
+        self.positions = [((SC_WDTH/2),(SC_HGHT/2))]
+        self.direction = random.choice([UP,DOWN,LEFT, RIGHT])
+        self.color = (13, 24, 50)
+ 
 
     def get_pos(self):
-        pass
+        return self.positions[0]
 
     def turn(self,point):
-        pass
+        if self.length > 1 and (point[0] * -1, point[1] * -1) == self.direction:
+            return 
+        else: 
+            self.direction = point
 
     def move(self):
-        pass
+        currentPos= self.get_pos()
+        x,y = self.direction
+        new = (((currentPos[0] + (x*GRIDSIZE))% SC_WDTH),(currentPos[1] +(y*GRIDSIZE)) % SC_HGHT)
+        if len(self.positions)>2 and new in self.positions[2:]:
+            self.reset()
+        
+        else:
+            self.positions.insert(0,new)
+            if len(self.positions) > self.length:
+                self.positions.pop()
+       
 
     def reset(self):
-        pass
+        self.length = 1
+        self.positions = [((SC_WDTH/2), (SC_HGHT/2))]
+        self.direction = random.choice((UP, DOWN,LEFT,RIGHT))
 
     def draw(self,surface):
         pass
