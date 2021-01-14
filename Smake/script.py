@@ -53,11 +53,18 @@ class snake(object):
         self.positions = [((SC_WDTH/2), (SC_HGHT/2))]
         self.direction = random.choice((UP, DOWN,LEFT,RIGHT))
 
-    def draw(self,surface):
-        pass
+    def draw(self,Surface):
+        for p in self.positions:
+            x= pygame.rect((p[0], p[1], (GRIDSIZE, GRIDSIZE)))
+            pygame.draw.rect(Surface, self.color,x)
+            pygame.draw.rect(Surface,(93,216,228),r,1)
+            
     
     def control(self):
-        pass
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
 
 
 class food(object):
@@ -68,7 +75,7 @@ class food(object):
     def rand_pos(self):
         pass
 
-    def draw(self, surface):
+    def draw(self, Surface):
         pass
 
 
@@ -78,11 +85,11 @@ def genGrid(Surface):
         for x in range (0, int(GRID_WDTH)):
             if ( y + x) % 2 == 0:
                 r = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE), (GRIDSIZE,GRIDSIZE))
-                pygame.draw.rect(surface,(93, 216, 228), r)
+                pygame.draw.rect(Surface,(93, 216, 228), r)
 
             else:
                 r_b = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE),(GRIDSIZE,GRIDSIZE))
-                pygame.draw.rect(surface,(84,194, 205), r_b)
+                pygame.draw.rect(Surface,(84,194, 205), r_b)
 
 def main():
     pygame.init()
@@ -90,16 +97,16 @@ def main():
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode((SC_WDTH, SC_HGHT),0,32)
 
-    surface = pygame.Surface(screen.get_size())
-    surface = surface.convert()
+    Surface = pygame.Surface(screen.get_size())
+    Surface = Surface.convert()
 
-    genGrid(surface)
+    genGrid(Surface)
 
     score = 0
     while (True):
         clock.tick(10)
 
-        screen.blit(surface, (0,0))
+        screen.blit(Surface, (0,0))
         pygame.display.update()
 
 main()
