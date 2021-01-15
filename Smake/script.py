@@ -55,10 +55,10 @@ class Snake(object):
 
     def draw(self,Surface):
         for p in self.positions:
-            x= pygame.Rect((p[0], p[1], (GRIDSIZE, GRIDSIZE)))
-            pygame.draw.rect(Surface, self.color,x)
-            pygame.draw.rect(Surface,(93,216,228),r,1)
-            
+            r = pygame.Rect((p[0], p[1]), (GRIDSIZE,GRIDSIZE))
+            pygame.draw.rect(Surface, self.color, r)
+            pygame.draw.rect(Surface, (93,216, 228), r, 1)
+                
     
     def control(self):
         for event in pygame.event.get():
@@ -119,6 +119,7 @@ def main():
 
     snake=Snake()
     food = Food()
+    myfont=pygame.font.SysFont("Arial", 16)
 
     score = 0
     while (True):
