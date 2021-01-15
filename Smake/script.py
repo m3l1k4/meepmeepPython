@@ -81,7 +81,7 @@ class Food(object):
 
     def __init__(self):
         self.position = (0,0)
-        self. color = ( 223, 123, 30)
+        self. color = ( 204, 0, 102)
         self.rand_pos() 
 
     def rand_pos(self):
@@ -100,11 +100,11 @@ def genGrid(Surface):
         for x in range (0, int(GRID_WDTH)):
             if ( y + x) % 2 == 0:
                 r = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE), (GRIDSIZE,GRIDSIZE))
-                pygame.draw.rect(Surface,(93, 216, 228), r)
+                pygame.draw.rect(Surface,(218, 96, 96), r)
 
             else:
                 r_b = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE),(GRIDSIZE,GRIDSIZE))
-                pygame.draw.rect(Surface,(84,194, 205), r_b)
+                pygame.draw.rect(Surface,(153,204, 255), r_b)
 
 def main():
     pygame.init()
@@ -119,11 +119,11 @@ def main():
 
     snake=Snake()
     food = Food()
-    myfont=pygame.font.SysFont("Arial", 16)
+    myfont=pygame.font.SysFont("monotspace", 24)
 
     score = 0
     while (True):
-        clock.tick(10)
+        clock.tick(5)
         
         snake.control()
         genGrid(Surface)
@@ -140,8 +140,8 @@ def main():
      
         screen.blit(Surface, (0,0))
 
-        text = myfont.render("Score{0}". format(score), 1, (0, 0, 0))
-        screen.blit(Surface,(0,0))
+        text = myfont.render("Score {0}". format(score), 1, (250, 250, 123))
+        screen.blit(text,(10,10))
 
         pygame.display.update()
 
