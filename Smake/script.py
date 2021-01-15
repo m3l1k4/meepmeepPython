@@ -16,7 +16,7 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
-class snake(object):
+class Snake(object):
 
     def __init__(self):
 
@@ -55,7 +55,7 @@ class snake(object):
 
     def draw(self,Surface):
         for p in self.positions:
-            x= pygame.rect((p[0], p[1], (GRIDSIZE, GRIDSIZE)))
+            x= pygame.Rect((p[0], p[1], (GRIDSIZE, GRIDSIZE)))
             pygame.draw.rect(Surface, self.color,x)
             pygame.draw.rect(Surface,(93,216,228),r,1)
             
@@ -65,18 +65,33 @@ class snake(object):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    self.turn(UP)
+                elif event.key == pygame.K_DOWN:
+                    self.turn(DOWN)
+                elif event.key == pygame.K_LEFT:
+                    self.turn(LEFT)
+                elif event.key == pygame.K_RIGHT:
+                    self.turn(RIGHT)
 
 
-class food(object):
+
+class Food(object):
 
     def __init__(self):
-        pass
+        self.position = (0,0)
+        self. color = ( 223, 123, 30)
+        self.rand_pos() 
 
     def rand_pos(self):
-        pass
+        self.position = (random.randint(0, GRID_WDTH-1)* GRIDSIZE, random.randint(0, GRID_HGHT-1)* GRIDSIZE)
 
     def draw(self, Surface):
-        pass
+        x = pygame.Rect((self.position[0], self.position[1]), (GRIDSIZE,GRIDSIZE))
+        pygame.draw.rect(Surface, self.color, x)
+        pygame.draw.rect(Surface, (93,216,228),x,1)
+
 
 
 
@@ -102,11 +117,34 @@ def main():
 
     genGrid(Surface)
 
+    snake=Snake()
+    food = Food()
+
     score = 0
     while (True):
         clock.tick(10)
+        
+        snake.control()
+        genGrid(Surface)
+        snake.move()
 
+        if snake.get_pos() == food.position:
+            snake.length += 1
+            score += 1
+            food.rand_pos()
+
+     
+        snake.draw(Surface)
+        food.draw(Surface)
+     
         screen.blit(Surface, (0,0))
+
+        text = myfont.render("Score{0}". format(score), 1, (0, 0, 0))
+        screen.blit(Surface,(0,0))
+
         pygame.display.update()
+
+
+
 
 main()
